@@ -1,0 +1,27 @@
+{
+  "name": "team01-finalproject",
+  "version": "1.0.0",
+  "description": "KusinaKanto is a food ordering API",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haithcock/team01-FinalProject.git"
+  },
+  "keywords": [
+    "food",
+    "ordering"
+  ],
+  "author": "Team 01",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haithcock/team01-FinalProject/issues"
+  },
+  "homepage": "https://github.com/haithcock/team01-FinalProject#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "mongoose": "^8.17.0"
+  }
+}
