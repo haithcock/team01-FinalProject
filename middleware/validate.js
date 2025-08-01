@@ -36,6 +36,29 @@ const saveUserRole = (req, res, next) => {
   });
 };
 
+const validateMenuItem = (req, res, next) => {
+  const validationRule = {
+    name: 'required|string',
+    description: 'required|string',
+    imageUrl: ['required', 'regex:/^\\/images\\/.+\\.(jpg|jpeg|png|gif)$/i'],
+    price: 'required|numeric',
+    category: 'required|string',
+    servingSize: 'required|string'
+  };
+
+  validator(req.body, validationRule, {}, (err, status) => {
+    if (!status) {
+      res.status(412).send({
+        success: false,
+        message: 'Validation failed',
+        data: err
+      });
+    } else {
+      next();
+    }
+  });
+};
+
 module.exports = {
-  saveUser, saveUserRole
+  saveUser, saveUserRole, validateMenuItem
 };
