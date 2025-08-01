@@ -1,7 +1,7 @@
 const express = require("express");
 const router = new express.Router();
 const userRoutes = require('./user');
-// const menuRoutes = require('./menu');
+const menuRoutes = require('./menu');
 // const orderRoutes = require('./order');
 // const paymentRoutes = require('./payment');
 
@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
 });
 
 router.use('/users', userRoutes);
-// router.use('/menu', menuRoutes);
+router.use('/menu', menuRoutes);
 // router.use('/orders', orderRoutes);
 // router.use('/payment', paymentRoutes);
 router.use('/api-docs', require('./swagger'));
