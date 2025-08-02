@@ -8,7 +8,6 @@
   "host": "team01-finalproject.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http",
     "https"
   ],
   "paths": {
