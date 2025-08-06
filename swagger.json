@@ -5,7 +5,7 @@
     "description": "Users Api",
     "version": "1.0.0"
   },
-  "host": "team01-finalproject-xyot.onrender.com/",
+  "host": "team01-finalproject-xyot.onrender.com",
   "basePath": "/",
   "schemes": [
     "http",
