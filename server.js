@@ -21,6 +21,18 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
     next();
 }).use(cors({ methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], origin: '*' }));
+
+
+passport.use(new GithubStrategy({
+    clientID: process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    callbackURL: process.env.GITHUB_CALLBACK_URL || 'https://cse341-1-3v1z.onrender.com/github/callback',
+}, (accessToken, refreshToken, profile, done) => {
+    // Here you would typically save the user to your database
+    return done(null, profile);
+}));
+
+
 app.use('/', require('./routes'));
 
 passport.serializeUser((user, done) => {
