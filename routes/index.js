@@ -6,10 +6,10 @@ const menuRoutes = require('./menu');
 // const paymentRoutes = require('./payment');
 
 // router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
-router.get("/", (req, res) => {
-  // #swagger.tags = ['Hello World']
-  res.send("Hello World")
+router.get('/', (req, res) => {
+    res.send(req.session.user !== undefined ? `Hello ${req.session.user.displayName}` : 'Logged Out');
 });
+
 
 router.use('/users', userRoutes);
 router.use('/menu', menuRoutes);
@@ -17,6 +17,16 @@ router.use('/menu', menuRoutes);
 // router.use('/payment', paymentRoutes);
 router.use('/api-docs', require('./swagger'));
 
+router.get('/login', passport.authenticate('github'), (req, res) => {});
+
+router.get('/logout', (req, res, next) => {
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/');
+    });
+});
 
 
 module.exports = router;
