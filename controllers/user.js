@@ -1,4 +1,3 @@
-const mongodb = require('../data/database');
 const userModel = require('../models/user');
 const { ObjectId }  = require('mongodb');
 
@@ -45,7 +44,7 @@ const updateUser = async (req, res) => {
   const {userName, email} = req.body;
   const response = await userModel.updateUser(contactId, userName, email);
   if (response.matchedCount > 0){
-    res.status(204).send();
+    res.status(201).json({ message: "User updated", id: response.contactId });
   }else {
     res.status(500).json(response.error || "Some error occured while updating a contact")
   }
