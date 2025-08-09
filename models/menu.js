@@ -24,4 +24,10 @@ async function deleteMenu(id) {
     return await getDatabase().collection('menu').deleteOne({_id: menuId })
 }
 
-module.exports = {getById, getAll, createMenu, updateMenu, deleteMenu};
+async function getManyByIds(ids) {
+  const objectIds = ids.map(id => new ObjectId(id));
+  const menu = await getDatabase().collection('menu').find({ _id: { $in: objectIds } }).toArray();
+  return menu;
+}
+
+module.exports = {getById, getAll, createMenu, updateMenu, deleteMenu, getManyByIds};
