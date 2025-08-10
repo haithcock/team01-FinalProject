@@ -4,7 +4,7 @@ const doc = {
         title: 'Users Api',
         description: 'Users Api',
     },
-    host: 'team01-finalproject-xyot.onrender.com',
+    host: 'localhost:3000',
     schemes: ['http','https']
 };
 

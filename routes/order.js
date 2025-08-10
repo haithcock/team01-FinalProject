@@ -18,12 +18,14 @@ router.get("/:id",
 router.post("/", 
   // #swagger.tags = ['Order']
   // #swagger.description = 'Create a new Order'
+  validate.validatecreateOrders,
   orderController.createOrder
 );
 
 router.put("/:id", 
   // #swagger.tags = ['Order']
   // #swagger.description = 'Update a Order by ID'
+  validate.validateUpdateOrders,
   orderController.updateOrder
 );
 
@@ -36,6 +38,7 @@ router.put("/:id/status",
 router.delete("/:id", 
   // #swagger.tags = ['Order']
   // #swagger.description = 'Delete a Order by ID'
+  validate.validateDeleteOrder,
   orderController.deleteOrder
 );
 
