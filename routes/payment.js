@@ -18,18 +18,21 @@ router.get("/:id",
 router.post("/", 
   // #swagger.tags = ['Payment']
   // #swagger.description = 'Create a new Payment'
+  validate.validatecreatePayments,
   paymentController.createPayment
 );
 
 router.put("/:id", 
   // #swagger.tags = ['Payment']
   // #swagger.description = 'Update a Payment by ID'
+  validate.validateUpdatePayments,
   paymentController.updatePayment
 );
 
 router.delete("/:id", 
   // #swagger.tags = ['Payment']
   // #swagger.description = 'Delete a Payment by ID'
+  validate.validateDeletePayments,
   paymentController.deletePayment
 );
 
