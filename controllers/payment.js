@@ -40,7 +40,7 @@ const createPayment = async (req, res) => {
     // Fetch the order
     const order = await orderModel.getById(orderId);
     if (!order) {
-      return res.status(404).json({ message: 'Order not found' });
+      return res.status(404).json({ message: 'Payment not found' });
     }
 
     // Extract menu item IDs from the order
