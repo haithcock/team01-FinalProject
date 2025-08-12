@@ -194,6 +194,7 @@ function validateUpdatePayment(req, res, next) {
   if (validation.fails()) {
     return res.status(422).json(validation.errors.all());
   }
+  next();
 
 }
 
