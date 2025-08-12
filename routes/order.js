@@ -37,6 +37,7 @@ router.put("/:id/status",
   // #swagger.description = 'Update a Order status by kitchen'
   authenticate.isAuthenticated,
   authenticate.ensureRole("kitchen"),
+  validate.validateUpdateOrderStatus,
   orderController.updateOrderStatus
 );
 

@@ -107,6 +107,28 @@ function validateUpdateOrders(req, res, next) {
     next();
 };
 
+function validateUpdateOrderStatus(req, res, next) {
+  const rules = {
+    orderStatus: 'required|string|in:Preparing,Completed,Cancelled',
+  };
+
+  // Only include keys that exist in request body
+  const data = {};
+  Object.keys(rules).forEach(key => {
+    if (req.body[key] !== undefined) {
+      data[key] = req.body[key];
+    }
+  });
+
+  const validation = new Validator(data, rules);
+
+  if (validation.fails()) {
+    return res.status(422).json(validation.errors.all());
+  }
+
+  next();
+}
+
 function validateDeleteOrder(req, res, next) {
     const data = {
         id: req.params.id || req.body.id
@@ -200,6 +222,6 @@ function validateDeletePayments(req, res, next) {
 
 
 module.exports = {
-  saveUser, saveUserRole, validateMenuItem, validatecreateOrders, validateUpdateOrders, validateDeleteOrder, validatecreatePayments, validateUpdatePayments, 
+  saveUser, saveUserRole, validateMenuItem, validatecreateOrders, validateUpdateOrders, validateDeleteOrder, validateUpdateOrderStatus, validatecreatePayments, validateUpdatePayments, 
   validateDeletePayments, 
 };
