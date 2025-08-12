@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const paymentController = require("../controllers/payment");
 const validate = require("../middleware/validate")
+const authenticate = require("../middleware/authenticate")
 
 router.get("/", 
   // #swagger.tags = ['Payment']
@@ -18,6 +19,7 @@ router.get("/:id",
 router.post("/", 
   // #swagger.tags = ['Payment']
   // #swagger.description = 'Create a new Payment'
+  authenticate.isAuthenticated,
   validate.validatecreatePayments,
   paymentController.createPayment
 );
@@ -25,6 +27,7 @@ router.post("/",
 router.put("/:id", 
   // #swagger.tags = ['Payment']
   // #swagger.description = 'Update a Payment by ID'
+  authenticate.isAuthenticated,
   validate.validateUpdatePayments,
   paymentController.updatePayment
 );
@@ -32,6 +35,8 @@ router.put("/:id",
 router.delete("/:id", 
   // #swagger.tags = ['Payment']
   // #swagger.description = 'Delete a Payment by ID'
+  authenticate.isAuthenticated,
+  authenticate.ensureRole('admin'),
   validate.validateDeletePayments,
   paymentController.deletePayment
 );

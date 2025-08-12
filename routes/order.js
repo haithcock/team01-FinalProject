@@ -2,7 +2,8 @@
 const express = require("express");
 const router = express.Router();
 const orderController = require("../controllers/order");
-const validate = require("../middleware/validate")
+const validate = require("../middleware/validate");
+const authenticate  = require("../middleware/authenticate");
 
 router.get("/", 
   // #swagger.tags = ['Order']
@@ -18,6 +19,7 @@ router.get("/:id",
 router.post("/", 
   // #swagger.tags = ['Order']
   // #swagger.description = 'Create a new Order'
+  authenticate.isAuthenticated,
   validate.validatecreateOrders,
   orderController.createOrder
 );
@@ -25,6 +27,7 @@ router.post("/",
 router.put("/:id", 
   // #swagger.tags = ['Order']
   // #swagger.description = 'Update a Order by ID'
+  authenticate.isAuthenticated,
   validate.validateUpdateOrders,
   orderController.updateOrder
 );
@@ -32,12 +35,16 @@ router.put("/:id",
 router.put("/:id/status", 
   // #swagger.tags = ['Order']
   // #swagger.description = 'Update a Order status by kitchen'
+  authenticate.isAuthenticated,
+  authenticate.ensureRole("kitchen"),
   orderController.updateOrderStatus
 );
 
 router.delete("/:id", 
   // #swagger.tags = ['Order']
   // #swagger.description = 'Delete a Order by ID'
+  authenticate.isAuthenticated,
+  authenticate.ensureRole("admin"),
   validate.validateDeleteOrder,
   orderController.deleteOrder
 );
