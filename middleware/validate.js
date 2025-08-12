@@ -147,57 +147,55 @@ function validateDeleteOrder(req, res, next) {
     next();
 };
 
-
-const validatecreatePayments = (req, res, next) => {
-  const validationRule = {
-  subtotal: 'required|integer',
-  tax: 'required|integer',
-  total: 'required|integer',
-  isPaid: 'required|boolean',
-  paymentMethod: 'required|string|in:Credit Card,Debit Card,Cash,Online'
-
-
+function validatePayment(req, res, next) {
+  const rules = {
+    orderId: [
+      'required',
+      'string',
+      'regex:/^[0-9a-fA-F]{24}$/', // MongoDB ObjectId check
+    ],
+    paymentMethod: 'required|string|in:Cash,Credit Card,Debit Card,GCash'
   };
 
-  validator(req.body, validationRule, {}, (err, status) => {
-    if (!status) {
-      res.status(412).send({
-        success: false,
-        message: 'Validation failed',
-        data: err
-      });
-    } else {
-      next();
+  // Only validate provided keys
+  const data = {};
+  Object.keys(rules).forEach(key => {
+    if (req.body[key] !== undefined) {
+      data[key] = req.body[key];
     }
   });
-};
 
-function validateUpdatePayments(req, res, next) {
-    const rules = {
-    subtotal: 'required|integer',
-    tax: 'required|integer',
-    total: 'required|integer',
+  const validation = new Validator(data, rules);
+
+  if (validation.fails()) {
+    return res.status(422).json(validation.errors.all());
+  }
+
+  next();
+}
+
+
+function validateUpdatePayment(req, res, next) {
+  const rules = {
     isPaid: 'required|boolean',
-    paymentMethod: 'required|string|in:Credit Card,Debit Card,Cash,Online'
+    paymentMethod: 'required|string|in:Cash,Credit Card,Debit Card,GCash'
+  };
 
-    };
-
-    // Only include keys that exist in request body (so all are optional)
-    const data = {};
-    Object.keys(rules).forEach(key => {
-        if (req.body[key] !== undefined) {
-            data[key] = req.body[key];
-        }
-    });
-
-    const validation = new Validator(data, rules);
-
-    if (validation.fails()) {
-        return res.status(422).json(validation.errors.all());
+  // Only validate keys that exist in request body
+  const data = {};
+  Object.keys(rules).forEach(key => {
+    if (req.body[key] !== undefined) {
+      data[key] = req.body[key];
     }
+  });
 
-    next();
-};
+  const validation = new Validator(data, rules);
+
+  if (validation.fails()) {
+    return res.status(422).json(validation.errors.all());
+  }
+
+}
 
 function validateDeletePayments(req, res, next) {
     const data = {
@@ -222,6 +220,6 @@ function validateDeletePayments(req, res, next) {
 
 
 module.exports = {
-  saveUser, saveUserRole, validateMenuItem, validatecreateOrders, validateUpdateOrders, validateDeleteOrder, validateUpdateOrderStatus, validatecreatePayments, validateUpdatePayments, 
+  saveUser, saveUserRole, validateMenuItem, validatecreateOrders, validateUpdateOrders, validateDeleteOrder, validateUpdateOrderStatus, validatePayment, validateUpdatePayment, 
   validateDeletePayments, 
 };

@@ -20,7 +20,7 @@ router.post("/",
   // #swagger.tags = ['Payment']
   // #swagger.description = 'Create a new Payment'
   authenticate.isAuthenticated,
-  validate.validatecreatePayments,
+  validate.validatePayment,
   paymentController.createPayment
 );
 
@@ -28,7 +28,7 @@ router.put("/:id",
   // #swagger.tags = ['Payment']
   // #swagger.description = 'Update a Payment by ID'
   authenticate.isAuthenticated,
-  validate.validateUpdatePayments,
+  validate.validateUpdatePayment,
   paymentController.updatePayment
 );
 
