@@ -8,6 +8,8 @@ const passport = require("passport");
 const session = require("express-session");
 const GithubStrategy = require("passport-github2").Strategy;
 const cors = require("cors");
+const { basicErrorHandler, notFoundHandler, jsonParseHandler } = require('./middleware/errorHandling');
+
 
 
 
@@ -54,6 +56,13 @@ passport.use(new GithubStrategy({
 }));
 
 app.use('/', require('./routes'));
+
+app.use(basicErrorHandler); // basic catch all error handler
+
+app.use(notFoundHandler); // page not found error handler
+
+app.use(jsonParseHandler); // JSON parse error handler
+
 
 passport.serializeUser((user, done) => {
     done(null, user._id); // store only the _id in the session
